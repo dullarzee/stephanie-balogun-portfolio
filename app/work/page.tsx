@@ -31,7 +31,7 @@ export default function Work() {
           >
             <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl mb-6">Portfolio</h1>
             <p className="text-white/70 max-w-2xl mx-auto">
-              A collection of my work in feature films, commercials, and music videos.
+              A collection of my work in Films, commercials, and music videos.
             </p>
           </motion.div>
 
@@ -117,7 +117,7 @@ export default function Work() {
 
 // Categories for filtering
 const categories = [
-  { name: "Feature Films", count: 8 },
+  { name: "Films", count: 8 },
   { name: "Commercials", count: 15 },
   { name: "Music Videos", count: 12 },
 ]

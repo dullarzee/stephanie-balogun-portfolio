@@ -46,7 +46,7 @@ export default function Navigation() {
   }
 
   const menuItems = [
-    { name: "Film portfolio", path: "/work" },
+    { name: "Color Portfolio", path: "/work" },
     { name: "Media-kit", path: "/media-kit" },
     { name: "About Me", path: "/about" },
     { name: "Contacts", path: "/contact" },
@@ -56,8 +56,8 @@ export default function Navigation() {
     <header className="fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto px-6 py-8 flex justify-between items-center">
         <Link href="/" className="text-white font-serif text-2xl tracking-wider z-50 mix-blend-difference">
-          Stephanie 
-        </Link>
+          STEPHANIE
+        </Link> 
 
         {/* Desktop Navigation */}
         <nav className="hidden md:block">

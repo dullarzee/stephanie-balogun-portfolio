@@ -140,7 +140,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             I craft visual narratives through color, enhancing the emotional impact of every frame. My work spans
-            feature films, music videos, and commercials, each with a unique color story.
+            Films, music videos, and commercials, each with a unique color story.
           </motion.p>
         </div>
       </section>

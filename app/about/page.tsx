@@ -54,7 +54,7 @@ export default function About() {
               <div className="h-px w-16 bg-orange"></div>
               <p className="text-white/70">
                 With over 5 years of experience in the film industry, I've developed a keen eye for color and
-                a deep understanding of how it can enhance storytelling. My work spans feature films,
+                a deep understanding of how it can enhance storytelling. My work spans Films,
                 commercials, and music videos, each project bringing its own unique challenges and creative
                 opportunities.
               </p>
