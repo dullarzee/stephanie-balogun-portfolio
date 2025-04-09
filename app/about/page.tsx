@@ -34,7 +34,7 @@ export default function About() {
             >
               <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
                 <Image
-                  src="/placeholder.svg"
+                  src="/assets/images/full.JPG"
                   alt="Stephanie Balogun"
                   fill
                   className="object-cover"
@@ -53,14 +53,19 @@ export default function About() {
               <p className="text-xl text-white/80">Professional Film Colorist</p>
               <div className="h-px w-16 bg-orange"></div>
               <p className="text-white/70">
-                With over 5 years of experience in the film industry, I've developed a keen eye for color and
-                a deep understanding of how it can enhance storytelling. My work spans Films,
-                commercials, and music videos, each project bringing its own unique challenges and creative
-                opportunities.
+              Stephanie Balogun is a Nigerian-based filmmaker who specializes in cinematography and coloring. Scratch that, let me talk about me. I have always had a passion and an interest in visual art. It started with a love for acting and photography, and then it morphed into a love for the art of filmmaking- I no longer wanted to simply be in movies, I wanted to tell stories. 
+I was a student at the renowned Identity School of Acting, the former home to John Boyega, Damson Idris, and Simone Ashley. I also featured in a widely popular web series (which I hope you never find), and all of these contributed to the passion I now have for filmmaking. (It’s one thing to love food, and it’s another thing to love cooking food; it was time for me to be a chef). 
+
               </p>
               <p className="text-white/70">
-                I believe that color grading is more than just technical adjustment – it's an art form that
-                can transform the emotional impact of every frame.
+              I have always been imaginative, so it's easy for me to come up with clear-mind images of what I want a scene to feel and look like. In 2022, I started pursuing my filmmaking career fully, working as an intern under Clan Yujo- A company that has worked on different films, music videos, and commercials and is also affiliated with Hollywood personalities like JJ Abrams, Morgan Freeman, Idris Elba, and many others. 
+              Learning and working on cinematography exposed me to the world of coloring, which I developed a love for on my journey. Now, cinematography and color have become my forte because I want to take full control of how images look from the start to the finished product. The final look of an image starts with cinematography and ends with color. 
+
+              </p>
+              <p className="text-white/70">
+              My goal as a cinematographer and colorist is to create images that look and feel surreal. I have since become a Davinci Resolve certified colorist with a long list of verifiable projects credited to my name. 
+              I believe that my knowledge as a cinematographer gives me an upper hand as a colorist because I am able to imitate and bring to life exactly what any cinematographer or director I work with intended for the image.
+
               </p>
             </motion.div>
           </div>

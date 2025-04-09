@@ -8,6 +8,7 @@ import { ArrowRight, Play, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function Home() {
   const videoRef = useRef(null)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
 
   useEffect(() => {
     if (videoRef.current) {
@@ -97,39 +98,96 @@ export default function Home() {
             </button>
           </motion.div>
         </div>
+
+        {/* Hero Video Section */}
+        <div className="relative aspect-video rounded-lg overflow-hidden bg-gradient-to-r from-black to-gray-900">
+          {!isVideoPlaying ? (
+            <div className="relative w-full h-full">
+              <Image
+                src={'/assets/images/Bloodforblood.jpg'}
+                alt="Showreel Thumbnail"
+                width={1280}
+                height={720}
+                className="object-cover"
+                priority
+              />
+              <div 
+                className="absolute inset-0 flex items-center justify-center cursor-pointer group"
+                onClick={() => setIsVideoPlaying(true)}
+              >
+                <div className="relative z-10 w-20 h-20 flex items-center justify-center rounded-full bg-white/20 group-hover:bg-white/30 transition-all duration-300">
+                  <Play className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="relative w-full pt-[56.25%]">
+              <iframe
+                src="https://www.youtube.com/embed/huSSYFsZT6Q?si=4KylypuZADK6KUbs&autoplay=1"
+                title="YouTube video player"
+                className="absolute top-0 left-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Optional: Add a poster/thumbnail that shows before the video loads */}
+        <div className="absolute inset-0 bg-black/50 pointer-events-none"></div>
       </section>
 
       {/* Showreel Section */}
       <section className="py-24 px-6 md:px-12 bg-black text-white">
         <div className="max-w-7xl mx-auto">
-          <motion.h2
-            className="font-serif text-3xl md:text-5xl mb-12 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
           >
-            <span className="text-orange">Color</span> is my language
-          </motion.h2>
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl mb-6">
+              Color is my language
+            </h1>
+            <p className="text-white/70 max-w-2xl mx-auto">
+            I craft visual narratives through color, enhancing the emotional impact of every frame. My work spans
+            Films, music videos, and commercials, each with a unique color story.
+            </p>
+          </motion.div>
 
           <motion.div
-            className="relative aspect-video mb-12 overflow-hidden rounded-lg"
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative aspect-video rounded-lg overflow-hidden"
           >
-            <Image
-              src="/placeholder.svg?height=720&width=1280"
-              alt="Showreel thumbnail"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button className="w-20 h-20 rounded-full bg-orange/80 flex items-center justify-center hover:bg-orange transition-colors duration-300">
-                <Play className="h-8 w-8 text-white ml-1" />
-              </button>
-            </div>
+            {!isVideoPlaying ? (
+              <div className="relative w-full h-full group">
+                <Image
+                  src="/assets/images/Bloodforblood.jpg"
+                  alt="Showreel Thumbnail"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-duration-300" />
+                <button
+                  onClick={() => setIsVideoPlaying(true)}
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white/20 group-hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                  aria-label="Play showreel"
+                >
+                  <Play className="w-8 h-8 text-white" />
+                </button>
+              </div>
+            ) : (
+              <iframe
+                src="https://www.youtube.com/embed/huSSYFsZT6Q?si=4KylypuZADK6KUbs&autoplay=1"
+                title="Showreel Video"
+                className="absolute top-0 left-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            )}
           </motion.div>
 
           <motion.p
@@ -139,8 +197,6 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            I craft visual narratives through color, enhancing the emotional impact of every frame. My work spans
-            Films, music videos, and commercials, each with a unique color story.
           </motion.p>
         </div>
       </section>
@@ -167,36 +223,36 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map((project, index) => (
+            {projects.map((project, index) => (
               <motion.div
-                key={index}
-                className="project-item group"
-                initial={{ opacity: 0, y: 30 }}
+                key={project.slug}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Link href={`/work/${project.slug}`}>
-                  <div className="relative aspect-[16/9] overflow-hidden">
+                <Link href={`/work/${project.slug}`} className="group block">
+                  <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-4">
                     <Image
-                      src={project.thumbnail || "/placeholder.svg"}
+                      src={project.thumbnail}
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <h3 className="font-serif text-xl text-white">{project.title}</h3>
-                        <p className="text-white/80 text-sm mt-1">{project.category}</p>
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
+                    
+                    {/* Added Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                        <Play className="w-6 h-6 text-white" />
                       </div>
                     </div>
-                    {index === 0 && (
-                      <div className="absolute top-4 left-4 bg-orange text-white text-xs uppercase tracking-wider py-1 px-3">
-                        Featured
-                      </div>
-                    )}
                   </div>
+                  <h3 className="text-xl font-serif mb-2">{project.title}</h3>
+                  <p className="text-turquoise text-sm uppercase tracking-wider font-medium">
+                    {project.category}
+                  </p>
                 </Link>
               </motion.div>
             ))}
@@ -273,7 +329,7 @@ export default function Home() {
               <div className="absolute -top-6 -left-6 w-24 h-24 bg-orange rounded-full opacity-20"></div>
               <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-turquoise rounded-full opacity-20"></div>
               <Image
-                src="/placeholder.svg?height=600&width=600"
+                src="/assets/images/full.JPG"
                 alt="Jane Doe"
                 width={500}
                 height={500}
@@ -291,17 +347,9 @@ export default function Home() {
               <h2 className="font-serif text-3xl md:text-5xl mb-6">About Me</h2>
               <div className="h-1 w-16 bg-orange mb-6"></div>
               <p className="text-lg">
-                I'm a film colorist with over 5 years of experience crafting visual aesthetics for films, commercials,
-                and music videos.
+              Stephanie Balogun is a Nigerian-based filmmaker who specializes in cinematography and coloring. Scratch that, let me talk about me. I have always had a passion and an interest in visual art. It started with a love for acting and photography, and then it morphed into a love for the art of filmmaking- I no longer wanted to simply be in movies, I wanted to tell stories.
               </p>
-              <p>
-                My approach to color grading is rooted in storytelling. I believe that color is a powerful tool that can
-                enhance narrative, evoke emotion, and create memorable visual experiences.
-              </p>
-              <p>
-                I've collaborated with directors and cinematographers across various genres, helping them achieve their
-                creative vision through thoughtful color work.
-              </p>
+            
               <div className="pt-6">
                 <Link
                   href="/about"
@@ -378,42 +426,42 @@ export default function Home() {
 }
 
 // Sample data
-const featuredProjects = [
+const projects = [
   {
-    title: "Echoes of Tomorrow",
-    category: "Feature Film",
-    slug: "echoes-of-tomorrow",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Abeke",
+    category: "Films",
+    slug: "abeke",
+    thumbnail: "/assets/images/abeke2.jpg",
   },
   {
-    title: "Neon Dreams",
-    category: "Music Video",
-    slug: "neon-dreams",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Efue",
+    category: "Films",
+    slug: "efue",
+    thumbnail: "/assets/images/efue.jpg",
   },
   {
-    title: "Urban Luxury",
-    category: "Commercial",
-    slug: "urban-luxury",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Holy Land",
+    category: "Music Videos",
+    slug: "holy-land",
+    thumbnail: "/assets/images/hollyland.jpg",
   },
   {
-    title: "Whispers in the Dark",
-    category: "Short Film",
-    slug: "whispers-in-the-dark",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Inciting",
+    category: "Commercials",
+    slug: "inciting",
+    thumbnail: "/assets/images/inciting.jpg",
   },
   {
-    title: "Rhythm & Soul",
-    category: "Music Video",
-    slug: "rhythm-and-soul",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Holy Land",
+    category: "Music Videos",
+    slug: "holy-land",
+    thumbnail: "/assets/images/abeke3.jpg",
   },
   {
-    title: "Fresh Perspective",
-    category: "Commercial",
-    slug: "fresh-perspective",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Inciting",
+    category: "Commercials",
+    slug: "inciting",
+    thumbnail: "/assets/images/Bloodforblood.jpg",
   },
 ]
 

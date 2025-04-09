@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import { Play, ArrowRight } from "lucide-react"
 
 export default function Work() {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
   const [activeCategory, setActiveCategory] = useState("all")
 
   const filteredProjects =
@@ -35,30 +36,50 @@ export default function Work() {
             </p>
           </motion.div>
 
-          {/* Featured Project */}
+          {/* Featured Project - Updated with video functionality */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mb-24"
           >
-            <div className="relative aspect-video rounded-lg overflow-hidden group">
-              <Image
-                src="/placeholder.svg"
-                alt="Featured Project"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button className="w-20 h-20 rounded-full bg-turquoise/80 flex items-center justify-center hover:bg-turquoise transition-colors duration-300">
-                  <Play className="h-8 w-8 text-white ml-1" />
-                </button>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-8">
-                <h2 className="font-serif text-3xl mb-2">Echoes of Tomorrow</h2>
-                <p className="text-white/70">Feature Film • 2024</p>
-              </div>
+            <div className="relative aspect-video rounded-lg overflow-hidden">
+              {!isVideoPlaying ? (
+                <div className="relative w-full h-full group">
+                  <Image
+                    src="/assets/images/spacemen.jpg"
+                    alt="Featured Project"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-duration-300" />
+                  <button
+                    onClick={() => setIsVideoPlaying(true)}
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-white/20 group-hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                    aria-label="Play featured video"
+                  >
+                    <Play className="w-8 h-8 text-white" />
+                  </button>
+                  <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 via-black/50 to-transparent">
+                    <h2 className="font-serif text-3xl mb-2">Featured Work</h2>
+                    <p className="text-turquoise text-sm uppercase tracking-wider font-medium">
+                      Showreel • 2024
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="relative w-full pt-[56.25%]">
+                  <iframe
+                    src="https://www.youtube.com/embed/YXcgCGR4oCw?si=KVCCwmK-dXOjCppC&autoplay=1"
+                    title="Featured Project Video"
+                    className="absolute top-0 left-0 w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              )}
             </div>
           </motion.div>
 
@@ -72,11 +93,14 @@ export default function Work() {
                 transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
                 className="relative group"
               >
-                <button className="w-full text-left p-6 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-turquoise/50 transition-all duration-300">
+                <Link 
+                  href={`/work/category/${category.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  className="block w-full text-left p-6 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-turquoise/50 transition-all duration-300"
+                >
                   <h3 className="font-serif text-xl mb-2 text-turquoise">{category.name}</h3>
                   <p className="text-white/70 mb-4">{category.count} Projects</p>
                   <ArrowRight className="h-5 w-5 text-turquoise transform group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -99,10 +123,20 @@ export default function Work() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
+                    
+                    {/* Added Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center transition-all duration-300 group-hover:scale-110">
+                        <Play className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+
                     <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <h3 className="font-serif text-xl mb-2">{project.title}</h3>
-                      <p className="text-white/70">{project.category}</p>
+                      <p className="text-turquoise text-sm uppercase tracking-wider font-medium">
+                        {project.category}
+                      </p>
                     </div>
                   </div>
                 </Link>
@@ -117,84 +151,73 @@ export default function Work() {
 
 // Categories for filtering
 const categories = [
-  { name: "Films", count: 8 },
-  { name: "Commercials", count: 15 },
-  { name: "Music Videos", count: 12 },
+  { name: "Films", count: 2 },
+  { name: "Commercials", count: 1 },
+  { name: "Music Videos", count: 7 },
+  { name: "Brand Identity", count: 1 },
 ]
 
-// Sample project data
+// Updated project data with correct categorization
 const allProjects = [
   {
-    title: "Echoes of Tomorrow",
-    category: "Feature Film",
-    slug: "echoes-of-tomorrow",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Salamat",
+    category: "Films",
+    slug: "salamat",
+    thumbnail: "/assets/images/salamat.jpg",
   },
   {
-    title: "Neon Dreams",
-    category: "Music Video",
-    slug: "neon-dreams",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "God's Wife",
+    category: "Films",
+    slug: "gods-wife",
+    thumbnail: "/assets/images/godswife.jpg",
   },
   {
-    title: "Urban Luxury",
-    category: "Commercial",
-    slug: "urban-luxury",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Holy Land",
+    category: "Commercials",
+    slug: "holy-land",
+    thumbnail: "/assets/images/hollyland.jpg",
   },
   {
-    title: "Whispers in the Dark",
-    category: "Feature Film",
-    slug: "whispers-in-the-dark",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Spacemen",
+    category: "Music Videos",
+    slug: "spacemen",
+    thumbnail: "/assets/images/spacemen.jpg",
   },
   {
-    title: "Rhythm & Soul",
-    category: "Music Video",
-    slug: "rhythm-and-soul",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Inciting",
+    category: "Music Videos",
+    slug: "inciting",
+    thumbnail: "/assets/images/inciting.jpg",
   },
   {
-    title: "Fresh Perspective",
-    category: "Commercial",
-    slug: "fresh-perspective",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Efue",
+    category: "Music Videos",
+    slug: "efue",
+    thumbnail: "/assets/images/efue.jpg",
   },
   {
-    title: "Electric Pulse",
-    category: "Music Video",
-    slug: "electric-pulse",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Timeless",
+    category: "Music Videos",
+    slug: "timeless",
+    thumbnail: "/assets/images/timeless.jpg",
   },
   {
-    title: "The Last Journey",
-    category: "Feature Film",
-    slug: "the-last-journey",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Abeke",
+    category: "Music Videos",
+    slug: "abeke",
+    thumbnail: "/assets/images/abeke2.jpg",
   },
   {
-    title: "Morning Brew",
-    category: "Commercial",
-    slug: "morning-brew",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
+    title: "Blood for Blood",
+    category: "Music Videos",
+    slug: "blood-for-blood",
+    thumbnail: "/assets/images/Bloodforblood.jpg",
   },
   {
-    title: "Midnight Serenade",
-    category: "Music Video",
-    slug: "midnight-serenade",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
-  },
-  {
-    title: "Beyond the Horizon",
-    category: "Feature Film",
-    slug: "beyond-the-horizon",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
-  },
-  {
-    title: "Tech Innovation",
-    category: "Commercial",
-    slug: "tech-innovation",
-    thumbnail: "/placeholder.svg?height=720&width=1280",
-  },
+    title: "Ceiling",
+    category: "Music Videos",
+    slug: "ceiling",
+    thumbnail: "/assets/images/ceiling.jpg",
+  }
 ]
 

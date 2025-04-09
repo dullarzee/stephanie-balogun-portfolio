@@ -4,25 +4,130 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, Play, Eye, Clock, Calendar, Award } from "lucide-react"
+import { useState } from "react"
 
 export default function ProjectPage({ params }: { params: { slug: string } }) {
-  // In a real application, you would fetch the project data based on the slug
-  const project = projects.find((p) => p.slug === params.slug) || projects[0]
+  // Updated project data to match your portfolio
+  const projects = [
+    {
+      title: "Abeke",
+      category: "Films",
+      slug: "abeke",
+      heroImage: "/assets/images/abeke2.jpg",
+      client: "Nollywood Productions",
+      year: "2024",
+      description: "A compelling Nigerian drama that explores tradition and modernity.",
+      overview: "As the colorist for Abeke, I focused on enhancing the rich cultural elements while maintaining a contemporary aesthetic that bridges traditional and modern storytelling.",
+      videoUrl: "https://www.youtube.com/embed/bZQm-V8Do-g?si=70bbjLK0LrEmUwX5&autoplay=1",
+      services: ["Color Grading", "Look Development", "Color Consultation"],
+    },
+    {
+      title: "Efue",
+      category: "Films",
+      slug: "efue",
+      heroImage: "/assets/images/efue.jpg",
+      client: "Nigerian Filmmakers Collective",
+      year: "2023",
+      description: "A powerful narrative showcasing Nigerian storytelling at its finest.",
+      overview: "The color palette for Efue was carefully crafted to enhance the emotional depth of the story, using subtle gradients and controlled contrast to maintain the authenticity of the narrative.",
+      videoUrl: "https://www.youtube.com/embed/7iZK8WiiyUw?si=hixMQoDHVl3DM1Vn&autoplay=1",
+      services: ["Color Grading", "Final Color", "DI"],
+    },
+    {
+      title: "Brand Evolution",
+      category: "Brand Identity",
+      slug: "brand-evolution",
+      heroImage: "/assets/images/spacemen.jpg",
+      client: "Spacemen",
+      year: "2024",
+      description: "A brand identity project showcasing visual innovation.",
+      overview: "Created a distinctive visual identity through careful color grading and visual consistency.",
+      videoUrl: "https://www.youtube.com/embed/YXcgCGR4oCw?si=DEhvVBSwqg9Fgbrd&autoplay=1",
+      services: ["Brand Identity", "Color Grading"],
+    },
+    {
+      title: "Inciting",
+      category: "Commercials",
+      slug: "inciting",
+      heroImage: "/assets/images/inciting.jpg",
+      client: "Brand Name",
+      year: "2024",
+      description: "A dynamic commercial that pushes creative boundaries.",
+      overview: "The color grade for Inciting was designed to create a bold, memorable look that aligns with the brand's identity while maintaining a premium feel.",
+      videoUrl: "https://www.youtube.com/embed/-aKed-YfpYA?si=F4F0csoO8S3ykLGY&autoplay=1",
+      services: ["Commercial Color", "Brand Color Consistency"],
+    },
+    {
+      title: "Holy Land",
+      category: "Music Videos",
+      slug: "holy-land",
+      heroImage: "/assets/images/hollyland.jpg",
+      client: "Music Artist",
+      year: "2024",
+      description: "A visually stunning music video blending spiritual elements.",
+      overview: "Created an ethereal atmosphere through careful color treatment while maintaining the vibrancy of performance scenes.",
+      videoUrl: "https://www.youtube.com/embed/_2WlxJifLL8?si=zLR3IndapZIVj9y6&autoplay=1",
+      services: ["Music Video Color", "Look Development"],
+    },
+    {
+      title: "Timeless",
+      category: "Music Videos",
+      slug: "timeless",
+      heroImage: "/assets/images/timeless.jpg",
+      client: "Music Artist",
+      year: "2024",
+      description: "A timeless piece showcasing artistic excellence.",
+      overview: "Developed a unique color palette that emphasizes the timeless nature of the music and visuals.",
+      videoUrl: "https://www.youtube.com/embed/yOg-wJpdaA4?si=rnBUA6DjJCPtRdgn&autoplay=1",
+      services: ["Music Video Color", "Color Grading"],
+    },
+    {
+      title: "We Are All We Have",
+      category: "Music Videos",
+      slug: "we-are-all-we-have",
+      heroImage: "/assets/images/weareall.jpg",
+      client: "Music Artist",
+      year: "2024",
+      description: "An emotional journey through visual storytelling.",
+      overview: "Created a cohesive visual narrative through careful color treatment and mood enhancement.",
+      videoUrl: "https://www.youtube.com/embed/psJ9hD42AeA?si=d_cjkYYAKI3XmN1z&autoplay=1",
+      services: ["Music Video Color", "Look Development"],
+    },
+  ]
+
+  const project = projects.find((p) => p.slug === params.slug)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+
+  if (!project) return null
 
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <section className="relative h-screen">
-        {/* Full-screen background image */}
+        {/* Full-screen background image or video */}
         <div className="absolute inset-0">
-          <Image
-            src={project.heroImage}
-            alt={project.title}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+          {!isVideoPlaying ? (
+            <>
+              <Image
+                src={project.heroImage}
+                alt={project.title}
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+            </>
+          ) : (
+            <div className="relative w-full h-full">
+              <iframe
+                src={project.videoUrl}
+                title={project.title}
+                className="absolute top-0 left-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          )}
         </div>
 
         {/* Content */}
@@ -37,11 +142,16 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             </Link>
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button className="w-20 h-20 rounded-full bg-turquoise/80 flex items-center justify-center hover:bg-turquoise transition-colors duration-300">
-              <Play className="h-8 w-8 text-white ml-1" />
-            </button>
-          </div>
+          {!isVideoPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <button 
+                onClick={() => setIsVideoPlaying(true)}
+                className="w-20 h-20 rounded-full bg-turquoise/80 flex items-center justify-center hover:bg-turquoise transition-colors duration-300"
+              >
+                <Play className="h-8 w-8 text-white ml-1" />
+              </button>
+            </div>
+          )}
 
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
             <motion.div
@@ -67,20 +177,21 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       {/* Project Details */}
       <section className="py-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {projectStats.map((stat, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-16">
+            {[...Array(10)].map((_, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10"
+                className="aspect-video relative rounded-lg overflow-hidden"
               >
-                <div className="w-12 h-12 rounded-full bg-turquoise/20 flex items-center justify-center mb-4">
-                  {stat.icon}
+                <div className="absolute inset-0 bg-white/5 backdrop-blur-sm">
+                  {/* Placeholder for cover images */}
+                  <div className="w-full h-full flex items-center justify-center text-white/30">
+                    Cover {index + 1}
+                  </div>
                 </div>
-                <h3 className="text-lg mb-2">{stat.label}</h3>
-                <p className="text-2xl text-turquoise">{stat.value}</p>
               </motion.div>
             ))}
           </div>
@@ -123,43 +234,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
     </div>
   )
 }
-
-// Sample project data
-const projects = [
-  {
-    title: "Echoes of Tomorrow",
-    category: "Feature Film",
-    slug: "echoes-of-tomorrow",
-    heroImage: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80",
-    client: "Independent Productions",
-    year: "2022",
-    description: "A science fiction drama exploring themes of memory and identity in a near-future setting.",
-    overview: "I developed a desaturated, cool palette for the present timeline and a warmer, golden look for memory sequences, helping the audience navigate the complex narrative structure.",
-    services: ["Direction", "DP", "Colorist", "Editor"],
-  },
-  {
-    title: "Neon Dreams",
-    category: "Music Video",
-    slug: "neon-dreams",
-    heroImage: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80",
-    client: "Electro Band",
-    year: "2023",
-    description: "A vibrant music video exploring themes of urban nightlife through a neon-colored lens.",
-    overview: "For this project, I created a high-contrast look with saturated neons against deep blacks to emphasize the electronic music's energy and create a dreamlike atmosphere.",
-    services: ["Direction", "DP", "Colorist", "Editor"],
-  },
-  {
-    title: "Urban Luxury",
-    category: "Commercial",
-    slug: "urban-luxury",
-    heroImage: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80",
-    client: "Elegance Fashion",
-    year: "2023",
-    description: "A high-end fashion commercial showcasing the latest urban luxury collection.",
-    overview: "I created a sophisticated, high-contrast look with rich blacks and subtle color accents to highlight the textures and details of the luxury garments.",
-    services: ["Direction", "DP", "Colorist", "Editor"],
-  },
-]
 
 // Sample project stats
 const projectStats = [
